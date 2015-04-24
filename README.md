@@ -170,7 +170,7 @@ Sample registration/new.html for displaying login form
 <% end %>
 ```
 
-Convinient Shorthands
+Convenient Shorthands
 -------------------
 Passport allows to check if an user is signed in or not. You can import the following in web.ex
 
