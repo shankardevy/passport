@@ -3,8 +3,10 @@ defmodule Passport.Mixfile do
 
   def project do
     [app: :passport,
+     description: "Provides authentication for phoenix applications",
      version: "0.0.1",
      elixir: "~> 1.0",
+     package: package,
      deps: deps]
   end
 
@@ -13,6 +15,12 @@ defmodule Passport.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [applications: [:logger]]
+  end
+
+  defp package do
+    [contributors: ["Shankar Dhanasekaran - (shankardevy)"],
+     licenses: ["MIT"],
+     links: %{github: "https://github.com/opendrops/passport"}]
   end
 
   # Dependencies can be Hex packages:
@@ -27,7 +35,6 @@ defmodule Passport.Mixfile do
   defp deps do
      [{:phoenix, "~> 0.11"},
      {:phoenix_ecto, "~> 0.2"},
-     {:bcrypt,    github: "opscode/erlang-bcrypt"},
      {:comeonin, "~> 0.4"},
      {:postgrex, ">= 0.0.0"}]
   end
