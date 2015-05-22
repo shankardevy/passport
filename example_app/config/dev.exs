@@ -33,3 +33,7 @@ config :example_app, ExampleApp.Repo,
   password: "postgres",
   database: "example_app_dev",
   size: 10 # The amount of database connections in the pool
+
+config :passport,
+  repo: ExampleApp.Repo,
+  user_class: ExampleApp.User
