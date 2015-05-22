@@ -31,4 +31,5 @@ config :example_app, ExampleApp.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "example_app_dev"
+  database: "example_app_dev",
+  size: 10 # The amount of database connections in the pool
