@@ -8,8 +8,8 @@ use Mix.Config
 # Configures the endpoint
 config :example_app, ExampleApp.Endpoint,
   url: [host: "localhost"],
-  root: Path.expand("..", __DIR__),
-  secret_key_base: "T7rQAX5bKiHcA2CRbC6P870pup4e0yg5CoYWJ7A7yB20VLRkmaaiMQJ1jT/FuSf3",
+  root: Path.dirname(__DIR__),
+  secret_key_base: "501kIdOLMVMXjcCfYOvZ924uKkKQnuKHxITSVO3Icdgce36YKW/s3Y5LN1t3Bm6E",
   debug_errors: false,
   pubsub: [name: ExampleApp.PubSub,
            adapter: Phoenix.PubSub.PG2]

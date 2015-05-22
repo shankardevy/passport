@@ -11,23 +11,14 @@ defmodule ExampleApp.Web do
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
   on imports, uses and aliases.
-  
+
   Do NOT define functions inside the quoted expressions
   below.
   """
 
-  def view do
+  def model do
     quote do
-      use Phoenix.View, root: "web/templates"
-
-      # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_flash: 2]
-
-      # Import URL helpers from the router
-      import ExampleApp.Router.Helpers
-
-      # Use all HTML functionality (forms, tags, etc)
-      use Phoenix.HTML
+      use Ecto.Model
     end
   end
 
@@ -35,17 +26,49 @@ defmodule ExampleApp.Web do
     quote do
       use Phoenix.Controller
 
-      # Alias the data repository as a convenience
+      # Alias the data repository and import query/model functions
       alias ExampleApp.Repo
+      import Ecto.Model
+      import Ecto.Query, only: [from: 2]
 
       # Import URL helpers from the router
       import ExampleApp.Router.Helpers
     end
   end
 
-  def model do
+  def view do
     quote do
-      use Ecto.Model
+      use Phoenix.View, root: "web/templates"
+
+      # Import convenience functions from controllers
+      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
+
+      # Import URL helpers from the router
+      import ExampleApp.Router.Helpers
+
+      # Use all HTML functionality (forms, tags, etc)
+      use Phoenix.HTML
+
+      # Helpers from Passport
+      import Passport.SessionManager, only: [current_user: 1, logged_in?: 1]
+    end
+  end
+
+  def router do
+    quote do
+      use Phoenix.Router
+    end
+  end
+
+  def channel do
+    quote do
+      use Phoenix.Channel
+
+      # Alias the data repository and import query/model functions
+      alias ExampleApp.Repo
+      import Ecto.Model
+      import Ecto.Query, only: [from: 2]
+
     end
   end
 
