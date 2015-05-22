@@ -18,7 +18,6 @@ defmodule Passport.RegistrationManager do
     end
   end
 
-
   def set_hashed_password(changeset = %{params: %{"password" => password}}) when password != "" and password != nil do
     hashed_password = Comeonin.Bcrypt.hashpwsalt(password)
 
