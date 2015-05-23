@@ -7,7 +7,8 @@ defmodule Passport.Mixfile do
      version: "0.0.1",
      elixir: "~> 1.0",
      package: package,
-     deps: deps]
+     deps: deps,
+     test_coverage: [tool: ExCoveralls]]
   end
 
   # Configuration for the OTP application
@@ -36,6 +37,7 @@ defmodule Passport.Mixfile do
      [{:phoenix, "~> 0.11"},
      {:phoenix_ecto, "~> 0.2"},
      {:comeonin, "~> 0.4"},
-     {:postgrex, ">= 0.0.0"}]
+     {:postgrex, ">= 0.0.0"},
+     {:excoveralls, "~> 0.3.10", only: [:dev, :test]}]
   end
 end
