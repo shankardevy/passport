@@ -1,12 +1,10 @@
 language: erlang
 otp_release:
-  - 17.0
+  - R17
 before_install:
-  - wget http://s3.hex.pm/builds/elixir/v1.0.4.zip
-  - unzip -d elixir v1.0.4.zip
-before_script:
-  - export PATH=`pwd`/elixir/bin:$PATH
-  - mix local.hex --force
-  - mix deps.get
-script:
-  - mix coveralls.travis
+  - git clone https://github.com/elixir-lang/elixir
+  - cd elixir && make && cd ..
+before_script: "export PATH=`pwd`/elixir/bin:$PATH"
+script: "MIX_ENV=test mix do deps.get, test"
+after_success:
+  - "mix compile && mix coveralls.travis"
