@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dhosterman/passport.svg?branch=master)](https://travis-ci.org/dhosterman/passport)
+
 Passport
 ========
 
