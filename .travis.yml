@@ -1,3 +1,12 @@
 language: erlang
-opt_release:
+otp_release:
   - 17.0
+before_install:
+  - wget http://s3.hex.pm/builds/elixir/v1.0.4.zip
+  - unzip -d elixir v1.0.4.zip
+before_script:
+  - export PATH=`pwd`/elixir/bin:$PATH
+  - mix local.hex --force
+  - mix deps.get
+script:
+  - MIX_ENV=all mix test
