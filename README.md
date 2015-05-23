@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/dhosterman/passport.svg?branch=master)](https://travis-ci.org/dhosterman/passport)
+[![Coverage Status](https://coveralls.io/repos/dhosterman/passport/badge.svg?branch=master)](https://coveralls.io/r/dhosterman/passport?branch=master)
 
 Passport
 ========
