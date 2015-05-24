@@ -36,6 +36,6 @@ defmodule Passport.RegistrationManager do
 
   defp presence_validator(field, nil), do: [{field, :required}]
   defp presence_validator(field, ""), do: [{field, :required}]
-  defp presence_validator(field, _), do: []
+  defp presence_validator(_, _), do: []
 
 end
