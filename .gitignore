@@ -2,3 +2,6 @@
 /deps
 erl_crash.dump
 *.ez
+
+# Local vim settings
+.vimrc

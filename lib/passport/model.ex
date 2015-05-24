@@ -1,5 +1,6 @@
 defmodule Passport.Model do
   import Ecto.Query
+  import String, only: [downcase: 1]
 
   def repo do
     Application.get_env(:passport, :repo)
@@ -10,7 +11,7 @@ defmodule Passport.Model do
   end
 
   def find_user_by_email(email) do
-    from(u in user_model, select: u, where: u.email == ^email)
+    from(u in user_model, select: u, where: u.email == ^downcase(email))
       |> repo.one
   end
 
