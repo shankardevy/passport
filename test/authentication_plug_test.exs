@@ -12,7 +12,7 @@ defmodule AuthenticationPlugTest do
   @custom_flash_key AuthenticationPlug.init([flash_key: :warning])
 
   test "it checks if the user is logged in if the options are default" do
-    with_mock Passport.SessionManager, [:passthrough], [logged_in?: fn(conn) -> true end] do
+    with_mock Passport.SessionManager, [:passthrough], [logged_in?: fn(_conn) -> true end] do
     conn = conn(:get, "/")
       |> Plug.Conn.put_private(:phoenix_action, :index)
       |> SessionHelper.session_with_user
@@ -23,7 +23,7 @@ defmodule AuthenticationPlugTest do
   end
 
   test "it checks if the user is logged in if only only action" do
-    with_mock Passport.SessionManager, [:passthrough], [logged_in?: fn(conn) -> true end] do
+    with_mock Passport.SessionManager, [:passthrough], [logged_in?: fn(_conn) -> true end] do
     conn = conn(:get, "/")
       |> Plug.Conn.put_private(:phoenix_action, :index)
       |> SessionHelper.session_with_user
@@ -34,7 +34,7 @@ defmodule AuthenticationPlugTest do
   end
 
   test "it does not check if the user is logged in if except includes action" do
-    with_mock Passport.SessionManager, [:passthrough], [logged_in?: fn(conn) -> true end] do
+    with_mock Passport.SessionManager, [:passthrough], [logged_in?: fn(_conn) -> true end] do
     conn = conn(:get, "/")
       |> Plug.Conn.put_private(:phoenix_action, :index)
       |> SessionHelper.session_with_user
@@ -45,7 +45,7 @@ defmodule AuthenticationPlugTest do
   end
 
   test "it uses except in preference to includes" do
-    with_mock Passport.SessionManager, [:passthrough], [logged_in?: fn(conn) -> true end] do
+    with_mock Passport.SessionManager, [:passthrough], [logged_in?: fn(_conn) -> true end] do
     conn = conn(:get, "/")
       |> Plug.Conn.put_private(:phoenix_action, :index)
       |> SessionHelper.session_with_user
