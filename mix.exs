@@ -38,6 +38,7 @@ defmodule Passport.Mixfile do
      {:phoenix_ecto, "~> 0.2"},
      {:comeonin, "~> 0.4"},
      {:postgrex, ">= 0.0.0"},
-     {:excoveralls, "~> 0.3.10", only: [:dev, :test]}]
+     {:excoveralls, "~> 0.3.10", only: [:dev, :test]},
+     {:mock, ">= 0.0.0", only: [:dev, :test]}]
   end
 end
