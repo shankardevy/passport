@@ -25,7 +25,7 @@ defmodule Passport.SessionManager do
 
   def current_user(conn) do
     uid = Plug.Conn.get_session(conn, :current_user) || 0
-    user = find_user_by_id(uid)
+    find_user_by_id(uid)
   end
 
   def logged_in?(conn) do
