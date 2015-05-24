@@ -211,3 +211,42 @@ Then inside your views you can call both `current_user` and `logged_in?` as belo
   <%=  current_user(@conn).email %>
 <% end %>
 ```
+
+How to require user to login/logout before accessing a page?
+---------------
+
+Passport comes with two convenient plugs to require users to login/logout before accessing a page.
+
+For eg, if you want only authenticated users to create or update your resource, you can plug `require_login`
+
+```
+defmodule Oosicamp.ProjectController do
+  ...
+  import Passport.AuthenticationPlug
+
+  plug :require_login, [
+      flash_key: :info,
+      flash_msg: "You must be logged in.",
+      redirect_to: "/signin"
+    ] when action in [:new, :edit, :create, :update]
+...
+end
+```
+
+On the contrary, if you want only logged out users to access a page, say, registration or signin page, you can plug `require_logout`
+
+```
+defmodule Oosicamp.RegistrationController do
+  ...
+  import Passport.AuthenticationPlug
+
+  plug :require_logout, [
+      flash_key: :info,
+      flash_msg: "You are already logged in.",
+      redirect_to: "/"
+    ]
+...
+end
+```
+
+**Note:** In both the use cases, passport plug should be called prior to calling any other plug. Otherwise, you will get error.
