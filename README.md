@@ -19,7 +19,7 @@ defp deps do
 end
 ```
 
-* run `mix deps.get, compile` to download and compile the dependency.
+* run `mix do deps.get, compile` to download and compile the dependency.
 
 * create an ecto model for your user with fields `email` and `crypted_password`. You may add additional fields if you need. Typically you can create a model in phoenix using the below command
   `mix phoenix.gen.model YourApp.User users email crypted_password`
@@ -29,7 +29,7 @@ end
 ```  
 config :passport,
   repo: YourApp.Repo,
-  user_class: YourApp.User,
+  user_class: YourApp.User
 ```
 
 Routes
@@ -130,6 +130,23 @@ end
 
 ```
 
+Create views
+------
+Create 2 simple views for the registration and session controller in `web/views/` folder as below:
+
+web/views/session_view.ex
+----
+defmodule ExampleApp.SessionView do
+  use ExampleApp.Web, :view
+end
+
+web/views/registration_view.ex
+-----
+defmodule ExampleApp.RegistrationView do
+  use ExampleApp.Web, :view
+end
+
+
 Sample session/new.html for displaying login form
 -------------
 
@@ -142,7 +159,7 @@ Sample session/new.html for displaying login form
 
   <div class="form-group">
     <label>Password</label>
-    <%= text_input f, :password, class: "form-control" %>
+    <%= password_input f, :password, class: "form-control" %>
   </div>
 
   <div class="form-group">
@@ -164,7 +181,7 @@ Sample registration/new.html for displaying login form
 
   <div class="form-group">
     <label>Password</label>
-    <%= text_input f, :password, class: "form-control" %>
+    <%= password_input f, :password, class: "form-control" %>
   </div>
 
   <div class="form-group">
