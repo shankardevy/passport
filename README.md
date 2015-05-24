@@ -194,3 +194,24 @@ Then inside your views you can call both `current_user` and `logged_in?` as belo
   <%=  current_user(@conn).email %>
 <% end %>
 ```
+
+Authentication in Controllers
+-----------------------------
+Use AuthenticationPlug in a contoller to declare Passport's behavior.
+
+```
+...
+alias Passport.AuthenticationPlug
+
+plug AuthenticationPlug, [only: [:dashboard, :admin], flash_msg: "You're not allowed!", redirect_to: "/login"]
+plug :action
+...
+```
+
+AuthenticationPlug will take the following options:
+- :only (array of atoms matching the controller actions to authenticate)
+- :except (array of atoms matching controller actions to not authenticate)
+- :flash_msg (string containing the flash message when a login isn't successful)
+- :redirect_to (string containing the uri to redirect to when a login isn't successful)
+
+Defaults to authenticating all controllers with a message of "You must be logged in." and a redirect to "/login"
