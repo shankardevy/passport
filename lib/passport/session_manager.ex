@@ -35,4 +35,7 @@ defmodule Passport.SessionManager do
     end
   end
 
+  def logged_out?(conn) do
+    !logged_in?(conn)
+  end
 end
