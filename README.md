@@ -14,7 +14,7 @@ How to use?
 ```
 defp deps do
   ...
-   {:passport, "~> 0.0.1"}
+   {:passport, "~> 0.0.3"}
   ...
 end
 ```
