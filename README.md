@@ -11,7 +11,7 @@ How to use?
 
 * add `passport` to your phoenix project's `mix.exs`
 
-```
+```elixir
 defp deps do
   ...
    {:passport, "~> 0.0.3"}
@@ -26,7 +26,7 @@ end
 
 * edit your project's `config/config.exs` file and configure passport. Passport basically needs to know the Repo name and the user module name.
 
-```  
+```elixir
 config :passport,
   repo: YourApp.Repo,
   user_class: YourApp.User
@@ -37,7 +37,7 @@ Routes
 Passport does not create routes or controllers for you. Rather, it only provides easy to use module and methods that you can use in your own router and controller. Overriding default routes and controllers have been one of the pain that I wanted to avoid in passport.
 
 Add the following routes to your router.ex. Change the path/controller name as per your application's needs.
-```
+```elixir
 scope "/", YourApp do
 ...
   get "/login", SessionController, :new
@@ -63,7 +63,7 @@ RegistrationController
 Sample session_controller.ex
 -------------------
 
-```
+```elixir
 defmodule YourApp.SessionController do
   use YourApp.Web, :controller
   alias Passport.SessionManager
@@ -100,7 +100,7 @@ end
 Sample registration_controller.ex
 -------------------
 
-```
+```elixir
 defmodule YourApp.RegistrationController do
   use YourApp.Web, :controller
 
@@ -150,7 +150,7 @@ end
 Sample session/new.html for displaying login form
 -------------
 
-```
+```elixir
 <%= form_for @conn, session_path(@conn, :create), [name: :session], fn f -> %>
   <div class="form-group">
     <label>Email</label>
@@ -172,7 +172,7 @@ Sample session/new.html for displaying login form
 Sample registration/new.html for displaying login form
 -------------
 
-```
+```elixir
 <%= form_for @conn, registration_path(@conn, :create), [name: :registration], fn f -> %>
   <div class="form-group">
     <label>Email</label>
@@ -194,7 +194,7 @@ Convenient Shorthands
 -------------------
 Passport allows to check if an user is signed in or not. You can import the following in web.ex
 
-```
+```elixir
 def view do
     quote do
       ...
@@ -206,7 +206,7 @@ end
 
 Then inside your views you can call both `current_user` and `logged_in?` as below:
 
-```
+```elixir
 <%= if logged_in?(@conn) do %>
   <%=  current_user(@conn).email %>
 <% end %>
@@ -219,7 +219,7 @@ Passport comes with two convenient plugs to require users to login/logout before
 
 For eg, if you want only authenticated users to create or update your resource, you can plug `require_login`
 
-```
+```elixir
 defmodule Oosicamp.ProjectController do
   ...
   import Passport.AuthenticationPlug
@@ -235,7 +235,7 @@ end
 
 On the contrary, if you want only logged out users to access a page, say, registration or signin page, you can plug `require_logout`
 
-```
+```elixir
 defmodule Oosicamp.RegistrationController do
   ...
   import Passport.AuthenticationPlug
