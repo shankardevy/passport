@@ -3,7 +3,7 @@ defmodule Passport.RegistrationManager do
   import Passport.Model
 
   def register(params) do
-    changeset = Changeset.cast(user_model.__struct__, params, ~w(email name home username phone_number address_line_1 address_line_2 address_state address_city address_zip))
+    changeset = Changeset.cast(user_model.__struct__, params, ~w(email name home phone_number address_line_1 address_line_2 address_state address_city address_zip))
     |> downcase_email
     |> set_hashed_password
     |> Changeset.validate_change(:email, &presence_validator/2)
