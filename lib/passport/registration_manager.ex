@@ -28,8 +28,10 @@ defmodule Passport.RegistrationManager do
     |> Changeset.add_error(:password, :required)
   end
 
-  def downcase_email(changeset = %{params: %{"email" => email}}) when email != "" and email != nil do
+  def downcase_email(changeset = %{params: %{"email" => email, "name" => name}}) when email != "" and email != nil do
     downcased_email = String.downcase(email)
+    IO.puts "The name is... "
+    IO.inspect name
     changeset
       |> Changeset.put_change(:email, downcased_email)
   end
