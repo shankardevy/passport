@@ -79,7 +79,7 @@ defmodule YourApp.SessionController do
     case SessionManager.login(conn, session_params) do
       {:ok, conn, user} ->
         conn
-        |> put_flash(:info, "Login succesful.")
+        |> put_flash(:info, "Login successful.")
         |> redirect(to: page_path(conn, :index))
        {:error, conn} ->
          conn
@@ -90,7 +90,7 @@ defmodule YourApp.SessionController do
 
   def delete(conn, _params) do
     SessionManager.logout(conn)
-    |> put_flash(:info, "Logged out succesfully.")
+    |> put_flash(:info, "Logged out successfully.")
     |> redirect(to: page_path(conn, :index))
   end
 
