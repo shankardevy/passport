@@ -25,7 +25,7 @@ defmodule Passport.RegistrationManager do
   end
   def set_hashed_password(changeset) do
     changeset
-    |> Changeset.add_error(:password, :required)
+    |> Changeset.add_error(:password, "is required")
   end
 
   def downcase_email(changeset = %{params: %{"email" => email}}) when email != "" and email != nil do
@@ -34,8 +34,8 @@ defmodule Passport.RegistrationManager do
       |> Changeset.put_change(:email, downcased_email)
   end
 
-  defp presence_validator(field, nil), do: [{field, :required}]
-  defp presence_validator(field, ""), do: [{field, :required}]
+  defp presence_validator(field, nil), do: [{field, "is required"}]
+  defp presence_validator(field, ""), do: [{field, "is required"}]
   defp presence_validator(_, _), do: []
 
 end
