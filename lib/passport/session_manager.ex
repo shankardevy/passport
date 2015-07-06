@@ -16,7 +16,7 @@ defmodule Passport.SessionManager do
   end
 
   def authenticate(nil, _) do
-    false
+    Comeonin.Bcrypt.dummy_checkpw
   end
 
   def authenticate(user, password) do
