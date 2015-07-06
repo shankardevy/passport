@@ -36,7 +36,7 @@ defmodule Passport.Mixfile do
   defp deps do
      [{:phoenix, "~> 0.11"},
      {:phoenix_ecto, "~> 0.2"},
-     {:comeonin, "~> 0.4"},
+     {:comeonin, "~> 1.0"},
      {:postgrex, ">= 0.0.0"},
      {:excoveralls, "~> 0.3.10", only: [:dev, :test]},
      {:mock, ">= 0.0.0", only: [:dev, :test]}]
