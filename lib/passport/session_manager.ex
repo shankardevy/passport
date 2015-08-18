@@ -5,14 +5,14 @@ defmodule Passport.SessionManager do
     user = find_user_by_email(credentials["email"])
     case authenticate(user, credentials["password"]) do
       true ->
-        {:ok, conn |> Plug.Conn.put_session(:current_user, user.id), user }
+        {:ok, conn |> Plug.Conn.put_session(:current_user, user.id) |>  Plug.Conn.put_private(:current_user, user.id), user }
       _ ->
         {:error, conn}
     end
   end
 
   def logout(conn) do
-    conn |> Plug.Conn.delete_session(:current_user)
+    conn |> Plug.Conn.delete_session(:current_user) |> Plug.Conn.put_private(:current_user, 0)
   end
 
   def authenticate(nil, _) do
@@ -24,7 +24,7 @@ defmodule Passport.SessionManager do
   end
 
   def current_user(conn) do
-    uid = Plug.Conn.get_session(conn, :current_user) || 0
+    uid = Plug.Conn.get_session(conn, :current_user) || conn.private[:current_user] || 0
     find_user_by_id(uid)
   end
 
