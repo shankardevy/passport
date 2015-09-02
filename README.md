@@ -136,16 +136,21 @@ Create 2 simple views for the registration and session controller in `web/views/
 
 web/views/session_view.ex
 ----
+
+```elixir
 defmodule ExampleApp.SessionView do
   use ExampleApp.Web, :view
 end
+```
 
 web/views/registration_view.ex
 -----
+
+```elixir
 defmodule ExampleApp.RegistrationView do
   use ExampleApp.Web, :view
 end
-
+```
 
 Sample session/new.html for displaying login form
 -------------
