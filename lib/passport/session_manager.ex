@@ -24,13 +24,15 @@ defmodule Passport.SessionManager do
   end
 
   def current_user(conn) do
-    uid = Plug.Conn.get_session(conn, :current_user) || 0
-    find_user_by_id(uid)
+    case Plug.Conn.get_session(conn, :current_user) || nil do
+      nil -> false
+      uid -> find_user_by_id(uid)
+    end
   end
 
   def logged_in?(conn) do
     case current_user(conn) do
-      nil -> false
+      false -> false
       _ -> true
     end
   end
