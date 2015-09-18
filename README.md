@@ -37,6 +37,7 @@ Routes
 Passport does not create routes or controllers for you. Rather, it only provides easy to use module and methods that you can use in your own router and controller. Overriding default routes and controllers have been one of the pain that I wanted to avoid in passport.
 
 Add the following routes to your router.ex. Change the path/controller name as per your application's needs.
+
 ```elixir
 scope "/", YourApp do
 ...
@@ -69,8 +70,6 @@ defmodule YourApp.SessionController do
   alias Passport.SessionManager
   alias YourApp.User
 
-  plug :action
-
   def new(conn, _params) do
     render conn, "new.html"
   end
@@ -83,8 +82,8 @@ defmodule YourApp.SessionController do
         |> redirect(to: page_path(conn, :index))
        {:error, conn} ->
          conn
-         |> put_flash(:info, "Email or password incorrect.")
-         |> redirect(to: page_path(conn, :index))
+         |> put_flash(:error, "Email or password incorrect.")
+         |> render(:new)
     end
   end
 
@@ -95,6 +94,7 @@ defmodule YourApp.SessionController do
   end
 
 end
+
 ```
 
 Sample registration_controller.ex
@@ -107,26 +107,24 @@ defmodule YourApp.RegistrationController do
   alias YourApp.User
   alias Passport.RegistrationManager
 
-  plug :action
-
   def new(conn, _params) do
+    user = User.changeset(%User{})
     conn
-    |> put_session(:foo, "bar")
-    |> render("new.html")
+    |> render("new.html", user: user)
   end
 
   def create(conn, %{"registration" => registration_params}) do
     case RegistrationManager.register(registration_params) do
-      {:ok} -> conn
+      {:ok, changeset} -> conn
          |> put_flash(:info, "Registration success")
          |> redirect(to: page_path(conn, :index))
-      _ -> conn
-         |> put_flash(:info, "Registration failed")
-         |> redirect(to: page_path(conn, :index))
+      {:error, changeset}-> conn
+         |> render("new.html", user: changeset)
     end
   end
 
 end
+
 
 ```
 
@@ -136,15 +134,19 @@ Create 2 simple views for the registration and session controller in `web/views/
 
 web/views/session_view.ex
 ----
+```elixir
 defmodule ExampleApp.SessionView do
   use ExampleApp.Web, :view
 end
+```
 
 web/views/registration_view.ex
 -----
+```elixir
 defmodule ExampleApp.RegistrationView do
   use ExampleApp.Web, :view
 end
+```
 
 
 Sample session/new.html for displaying login form
@@ -166,6 +168,7 @@ Sample session/new.html for displaying login form
     <%= submit "Login", class: "btn btn-primary" %>
   </div>
 <% end %>
+
 ```
 
 
@@ -173,7 +176,20 @@ Sample registration/new.html for displaying login form
 -------------
 
 ```elixir
-<%= form_for @conn, registration_path(@conn, :create), [name: :registration], fn f -> %>
+<%= form_for @user, registration_path(@conn, :create), [as: :registration], fn f -> %>
+  <div class="alert alert-danger">
+    <ul>
+      <%= for {attr, message} <- f.errors do %>
+        <li><%= humanize(attr) %> <%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label>Name</label>
+    <%= text_input f, :name, class: "form-control" %>
+  </div>
+
   <div class="form-group">
     <label>Email</label>
     <%= text_input f, :email, class: "form-control" %>
@@ -187,6 +203,9 @@ Sample registration/new.html for displaying login form
   <div class="form-group">
     <%= submit "Signup", class: "btn btn-primary" %>
   </div>
+<% end %>
+
+
 <% end %>
 ```
 
