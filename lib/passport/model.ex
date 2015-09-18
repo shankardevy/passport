@@ -11,13 +11,12 @@ defmodule Passport.Model do
   end
 
   def find_user_by_email(email) do
-    from(u in user_model, select: u, where: u.email == ^downcase(email))
-      |> repo.one
+    email = String.downcase(email)
+    user_model |> repo.get_by(email: email)
   end
 
   def find_user_by_id(id) do
-    from(u in user_model, select: u, where: u.id == ^id)
-      |> repo.one
+    user_model |> repo.get id
   end
 
 end
