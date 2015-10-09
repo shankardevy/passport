@@ -30,6 +30,10 @@ defmodule Passport.SessionManager do
     end
   end
 
+  def admin?(conn) do
+    logged_in?(conn) && current_user(conn).admin
+  end
+
   def logged_in?(conn) do
     case current_user(conn) do
       false -> false
