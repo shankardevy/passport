@@ -1,6 +1,6 @@
 <div class="jumbotron">
-  <h2>Welcome to Phoenix!</h2>
-  <p class="lead">Most frameworks make you choose between speed and a productive environment. <a href="http://phoenixframework.org">Phoenix</a> and <a href="http://elixir-lang.org">Elixir</a> give you both.</p>
+  <h2><%= gettext "Welcome to %{name}", name: "Phoenix!" %></h2>
+  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
 </div>
 
 <div class="row marketing">
@@ -26,10 +26,7 @@
         <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
       </li>
       <li>
-        <a href="https://github.com/phoenixframework/phoenix/issues?state=open">Issues</a>
-      </li>
-      <li>
-        <a href="irc://irc.freenode.net/elixir-lang">#elixir-lang on freenode IRC</a>
+        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
       </li>
       <li>
         <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
@@ -37,4 +34,3 @@
     </ul>
   </div>
 </div>
-

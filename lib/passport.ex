@@ -1,3 +1,2 @@
 defmodule Passport do
-
 end

@@ -4,7 +4,7 @@ use Mix.Config
 # you likely want to automate and keep it away from
 # your version control system.
 config :example_app, ExampleApp.Endpoint,
-  secret_key_base: "+3TaOZhAbTa93DkYC8myGgx30ODUD8crPbejlIoY1ayhqbyUG3CZZIg2n2e6hnwe"
+  secret_key_base: "Ek9P4d7ptUFZY2i3f1YvWcqBgLPbBp9RrPMKBfSvSQkAaSG+2pkEos0ol8/d1Zmo"
 
 # Configure your database
 config :example_app, ExampleApp.Repo,
@@ -12,4 +12,4 @@ config :example_app, ExampleApp.Repo,
   username: "postgres",
   password: "postgres",
   database: "example_app_prod",
-  size: 20 # The amount of database connections in the pool
+  pool_size: 20
