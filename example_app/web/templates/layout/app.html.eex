@@ -21,7 +21,15 @@
         </nav>
         <span class="logo"></span>
       </header>
-
+      <ul class="">
+        <%= if @current_user do %>
+          <li><%= @current_user.email %></li>
+          <li><%= link "Log out", to: session_path(@conn, :delete) %>
+        <% else %>
+          <li><%= link "Login", to: session_path(@conn, :new) %></li>
+          <li><%= link "Register", to: registration_path(@conn, :new) %></li>
+        <% end %>
+      </ul>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 

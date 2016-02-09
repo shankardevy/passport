@@ -1,0 +1,22 @@
+<h1>Register</h1>
+<%= form_for @changeset, registration_path(@conn, :create), fn f -> %>
+  <%= if f.errors != [] do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong!<br> Please check the errors below:</p>
+      <ul>
+        <%= for {attr, message} <- f.errors do %>
+            <li><%= humanize(attr) %> <%= translate_error(message) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= text_input f, :email, placeholder: "email", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= password_input f, :password, placeholder: "Password", class: "form-control" %>
+  </div>
+
+  <%= submit "Register", class: "btn btn-primary" %>
+<% end %>

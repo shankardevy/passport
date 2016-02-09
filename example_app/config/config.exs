@@ -5,6 +5,10 @@
 # is restricted to this project.
 use Mix.Config
 
+config :passport,
+  resource: ExampleApp.User,
+  repo: ExampleApp.Repo
+
 # Configures the endpoint
 config :example_app, ExampleApp.Endpoint,
   url: [host: "localhost"],
