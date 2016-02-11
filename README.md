@@ -1,271 +1,32 @@
-[![Build Status](https://travis-ci.org/opendrops/passport.svg?branch=master)](https://travis-ci.org/opendrops/passport)
-[![Coverage Status](https://coveralls.io/repos/opendrops/passport/badge.svg?branch=master)](https://coveralls.io/r/opendrops/passport?branch=master)
+# Passport
+Passport is a ready to use authentication library for Phoenix. Using Passport is as easy as just running this simple command `$ mix passport.install`
 
-Passport
-========
+Passport is designed to have minimal code hidden behind the library and expose all the controllers, templates and views in your project with some default values.
 
-Passport provides authentication for [Phoenix](http://github.com/phoenixframework/phoenix) applications.
+Passport is WIP. Bug reports and wish list from users are most welcome!
 
-How to use?
-----------
+## Installation
 
-* add `passport` to your phoenix project's `mix.exs`
+  1. Add passport to your list of dependencies in `mix.exs`:
 
-```elixir
-defp deps do
-  ...
-   {:passport, "~> 0.0.3"}
-  ...
-end
-```
+        def deps do
+          [{:passport, "~> 0.0.4"}]
+        end
 
-* run `mix do deps.get, compile` to download and compile the dependency.
+  2. `$ mix do deps.get, compile`
 
-* create an ecto model for your user with fields `email` and `crypted_password`. You may add additional fields if you need. Typically you can create a model in phoenix using the below command
-  `mix phoenix.gen.model YourApp.User users email crypted_password`
+  3. `$ mix passport.install`
 
-* edit your project's `config/config.exs` file and configure passport. Passport basically needs to know the Repo name and the user module name.
+## Example
 
-```elixir
-config :passport,
-  repo: YourApp.Repo,
-  user_class: YourApp.User
-```
+  1. `$ git clone git@github.com:opendrops/passport.git`
 
-Routes
------
-Passport does not create routes or controllers for you. Rather, it only provides easy to use module and methods that you can use in your own router and controller. Overriding default routes and controllers have been one of the pain that I wanted to avoid in passport.
+  2. `$ cd passport/example_app`
 
-Add the following routes to your router.ex. Change the path/controller name as per your application's needs.
+  3. `$ mix do deps.get, compile`
 
-```elixir
-scope "/", YourApp do
-...
-  get "/login", SessionController, :new
-  post "/login", SessionController, :create
-  get "/logout", SessionController, :delete
+  4. `$ mix phoenix.server`
 
-  get "/signup", RegistrationController, :new
-  post "/signup", RegistrationController, :create
-end
-```
+  Go to `http://localhost:4000` for a demo.
 
-Here we assume that
-
-SessionController
-* login form is shown in the url '/login' (GET)
-* login form gets submitted to the url '/login' (POST)
-* user get logout when visiting the path '/logout' (GET)
-
-RegistrationController
-* registration form is shown in the url '/signup' (GET)
-* registration form gets submitted to the url '/signup' (POST)
-
-Sample session_controller.ex
--------------------
-
-```elixir
-defmodule YourApp.SessionController do
-  use YourApp.Web, :controller
-  alias Passport.SessionManager
-  alias YourApp.User
-
-  def new(conn, _params) do
-    render conn, "new.html"
-  end
-
-  def create(conn, %{"session" => session_params}) do
-    case SessionManager.login(conn, session_params) do
-      {:ok, conn, user} ->
-        conn
-        |> put_flash(:info, "Login succesful.")
-        |> redirect(to: page_path(conn, :index))
-       {:error, conn} ->
-         conn
-         |> put_flash(:error, "Email or password incorrect.")
-         |> render(:new)
-    end
-  end
-
-  def delete(conn, _params) do
-    SessionManager.logout(conn)
-    |> put_flash(:info, "Logged out succesfully.")
-    |> redirect(to: page_path(conn, :index))
-  end
-
-end
-
-```
-
-Sample registration_controller.ex
--------------------
-
-```elixir
-defmodule YourApp.RegistrationController do
-  use YourApp.Web, :controller
-
-  alias YourApp.User
-  alias Passport.RegistrationManager
-
-  def new(conn, _params) do
-    user = User.changeset(%User{})
-    conn
-    |> render("new.html", user: user)
-  end
-
-  def create(conn, %{"registration" => registration_params}) do
-    case RegistrationManager.register(registration_params) do
-      {:ok, changeset} -> conn
-         |> put_flash(:info, "Registration success")
-         |> redirect(to: page_path(conn, :index))
-      {:error, changeset}-> conn
-         |> render("new.html", user: changeset)
-    end
-  end
-
-end
-
-
-```
-
-Create views
-------
-Create 2 simple views for the registration and session controller in `web/views/` folder as below:
-
-web/views/session_view.ex
-----
-```elixir
-defmodule ExampleApp.SessionView do
-  use ExampleApp.Web, :view
-end
-```
-
-web/views/registration_view.ex
------
-```elixir
-defmodule ExampleApp.RegistrationView do
-  use ExampleApp.Web, :view
-end
-```
-
-
-Sample session/new.html for displaying login form
--------------
-
-```elixir
-<%= form_for @conn, session_path(@conn, :create), [name: :session], fn f -> %>
-  <div class="form-group">
-    <label>Email</label>
-    <%= text_input f, :email, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <label>Password</label>
-    <%= password_input f, :password, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Login", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-```
-
-
-Sample registration/new.html for displaying login form
--------------
-
-```elixir
-<%= form_for @user, registration_path(@conn, :create), [as: :registration], fn f -> %>
-  <div class="alert alert-danger">
-    <ul>
-      <%= for {attr, message} <- f.errors do %>
-        <li><%= humanize(attr) %> <%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div class="form-group">
-    <label>Name</label>
-    <%= text_input f, :name, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <label>Email</label>
-    <%= text_input f, :email, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <label>Password</label>
-    <%= password_input f, :password, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Signup", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-
-<% end %>
-```
-
-Convenient Shorthands
--------------------
-Passport allows to check if an user is signed in or not. You can import the following in web.ex
-
-```elixir
-def view do
-    quote do
-      ...
-      import Passport.SessionManager, only: [current_user: 1, logged_in?: 1]
-      ...
-    end
-end
-```
-
-Then inside your views you can call both `current_user` and `logged_in?` as below:
-
-```elixir
-<%= if logged_in?(@conn) do %>
-  <%=  current_user(@conn).email %>
-<% end %>
-```
-
-How to require user to login/logout before accessing a page?
----------------
-
-Passport comes with two convenient plugs to require users to login/logout before accessing a page.
-
-For eg, if you want only authenticated users to create or update your resource, you can plug `require_login`
-
-```elixir
-defmodule Oosicamp.ProjectController do
-  ...
-  import Passport.AuthenticationPlug
-
-  plug :require_login, [
-      flash_key: :info,
-      flash_msg: "You must be logged in.",
-      redirect_to: "/signin"
-    ] when action in [:new, :edit, :create, :update]
-...
-end
-```
-
-On the contrary, if you want only logged out users to access a page, say, registration or signin page, you can plug `require_logout`
-
-```elixir
-defmodule Oosicamp.RegistrationController do
-  ...
-  import Passport.AuthenticationPlug
-
-  plug :require_logout, [
-      flash_key: :info,
-      flash_msg: "You are already logged in.",
-      redirect_to: "/"
-    ]
-...
-end
-```
-
-**Note:** In both the use cases, passport plug should be called prior to calling any other plug. Otherwise, you will get error.
+  

@@ -15,4 +15,5 @@ config :example_app, ExampleApp.Repo,
   username: "postgres",
   password: "postgres",
   database: "example_app_test",
-  size: 1 # Use a single connection for transactional tests
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox

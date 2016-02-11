@@ -1,24 +1,35 @@
 defmodule ExampleApp.User do
   use ExampleApp.Web, :model
+  alias Passport.Password
 
   schema "users" do
     field :email, :string
-    field :crypted_password, :string
+    field :password, :string, virtual: true
+    field :password_hash, :string
 
     timestamps
   end
 
-  @required_fields ~w(email crypted_password)
-  @optional_fields ~w()
-
-  @doc """
-  Creates a changeset based on the `model` and `params`.
-
-  If `params` are nil, an invalid changeset is returned
-  with no validation performed.
-  """
-  def changeset(model, params \\ :empty) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def changeset(model, params \\ :empty) do model
+    |> cast(params, ~w(email), [])
+    |> validate_length(:email, min: 1, max: 150)
+    |> unique_constraint(:email)
   end
+
+  def registration_changeset(model, params) do model
+    |> changeset(params)
+    |> cast(params, ~w(password), [])
+    |> validate_length(:password, min: 6, max: 100)
+    |> put_hashed_password()
+  end
+
+  defp put_hashed_password(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
+        put_change(changeset, :password_hash, Password.hash(pass))
+        _ ->
+          changeset
+    end
+  end
+
 end

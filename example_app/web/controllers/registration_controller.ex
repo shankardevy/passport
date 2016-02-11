@@ -2,24 +2,23 @@ defmodule ExampleApp.RegistrationController do
   use ExampleApp.Web, :controller
 
   alias ExampleApp.User
-  alias Passport.RegistrationManager
-
-  plug :action
 
   def new(conn, _params) do
+    changeset = User.changeset(%ExampleApp.User{})
     conn
-    |> put_session(:foo, "bar")
-    |> render("new.html")
+    |> render(:new, changeset: changeset)
   end
 
-  def create(conn, %{"registration" => registration_params}) do
-    case RegistrationManager.register(registration_params) do
-      {:ok} -> conn
-         |> put_flash(:info, "Registration success")
-         |> redirect(to: page_path(conn, :index))
-      _ -> conn
-         |> put_flash(:info, "Registration failed")
-         |> redirect(to: page_path(conn, :index))
+  def create(conn, %{"user" => registration_params}) do
+    changeset = User.registration_changeset(%User{}, registration_params)
+    case Repo.insert(changeset) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "Account created!")
+        |> redirect(to: page_path(conn, :index))
+      {:error, changeset} ->
+        conn
+        |> render(:new, changeset: changeset)
     end
   end
 
