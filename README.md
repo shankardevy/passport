@@ -41,15 +41,15 @@ Passport is WIP. Bug reports and wish list from users are most welcome!
 
     Add Passport configuration in your config.exs like below:
         config :passport,
-          resource: #{binding[:module]},
-          repo: #{binding[:base]}.Repo
+          resource: "#{binding[:module]}",
+          repo: "#{binding[:base]}.Repo"
 
     Optionally, in your navigation you may to include this:
 
           <ul>
             <%= if @current_user do %>
               <li><%= @current_user.email %></li>
-              <li><%= link "Log out", to: session_path(@conn, :delete) %>
+              <li><%= link "Log out", to: session_path(@conn, :delete) %></li>
             <% else %>
               <li><%= link "Login", to: session_path(@conn, :new) %></li>
               <li><%= link "Register", to: registration_path(@conn, :new) %></li>
