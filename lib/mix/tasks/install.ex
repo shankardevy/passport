@@ -84,7 +84,7 @@ defmodule Mix.Tasks.Passport.Install do
           <ul class="">
             <%= if @current_user do %>
               <li><%= @current_user.email %></li>
-              <li><%= link "Log out", to: session_path(@conn, :delete) %>
+              <li><%= link "Log out", to: session_path(@conn, :delete) %></li>
             <% else %>
               <li><%= link "Login", to: session_path(@conn, :new) %></li>
               <li><%= link "Register", to: registration_path(@conn, :new) %></li>
