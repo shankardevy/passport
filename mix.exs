@@ -24,8 +24,8 @@ defmodule Passport.Mixfile do
 
   defp deps do
     [
-      {:phoenix, "~> 1.1.2"},
-      {:comeonin, "~> 2.0"}]
+      {:phoenix, "~> 1.1"},
+      {:comeonin, "~> 2.5"}]
   end
 
 end
