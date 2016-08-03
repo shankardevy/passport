@@ -10,7 +10,7 @@ Passport is WIP. Bug reports and wish list from users are most welcome!
   1. Add passport to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:passport, "~> 0.0.4"}]
+          [{:passport, git: "https://github.com/opendrops/passport.git"}]
         end
 
   2. `$ mix do deps.get, compile`
