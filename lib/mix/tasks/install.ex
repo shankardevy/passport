@@ -48,7 +48,7 @@ defmodule Mix.Tasks.Passport.Install do
         {:eex, "password_controller.ex", "web/controllers/password_controller.ex"},
         {:eex, "session_new.html.eex",  "web/templates/session/new.html.eex"},
         {:eex, "registration_new.html.eex", "web/templates/registration/new.html.eex"},
-        {:eex, "password_reset.html.eex", "web/templates/password/forget_password.html.eex"},
+        {:eex, "password_new.html.eex", "web/templates/password/new.html.eex"},
       ]
 
     Mix.Phoenix.copy_from paths(), "priv/templates/passport.install", "", binding, files
@@ -67,12 +67,12 @@ defmodule Mix.Tasks.Passport.Install do
     Add the following routes to your browser scope in web/router.ex:
 
         get "/login", SessionController, :new
-        post "/login", SessionController, :create
+        post "/session", SessionController, :create
         get "/logout", SessionController, :delete
-        get "/register", RegistrationController, :new
+        get "/join", RegistrationController, :new
         post "/register", RegistrationController, :create
-        get "/forget-password", PasswordController, :forget_password
-        post "/reset-password", PasswordController, :reset_password
+        get "/passwords/new", PasswordController, :new
+        post "/passwords", PasswordController, :reset
 
     Add Passport configuration in your config.exs like below:
         config :passport,

@@ -3,9 +3,8 @@ defmodule <%= base %>.Repo.Migrations.Create<%= scoped %> do
 
   def change do
     create table(:<%= plural %>) do
-      add :name, :string
       add :email, :string, null: false
-      add :password_hash, :string
+      add :password_hash, :string      
 
       timestamps
     end

@@ -3,9 +3,9 @@ defmodule <%= base %>.PasswordController do
 
   alias <%= module %>
 
-  def forget_password(conn, _) do
+  def new(conn, _) do
     conn
-    |> render(:forget_password)
+    |> render(:new)
   end
 
   def reset_password(conn, %{"user" => %{"email" => email}}) do
