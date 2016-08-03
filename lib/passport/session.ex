@@ -2,10 +2,6 @@ defmodule Passport.Session do
   import Plug.Conn
   import Comeonin.Bcrypt, only: [checkpw: 2]
 
-
-  @resource Application.get_env(:passport, :resource)
-  @repo Application.get_env(:passport, :repo)
-
   def login(conn, user) do
     conn
     |> assign(:current_user, user)
@@ -14,7 +10,7 @@ defmodule Passport.Session do
   end
 
   def login(conn, email, given_pass) do
-    user = @repo.get_by(@resource, email: email)
+    user = Passport.Config.repo.get_by(Passport.Config.resource, email: email)
 
     cond do
       user && checkpw(given_pass, user.password_hash) ->
