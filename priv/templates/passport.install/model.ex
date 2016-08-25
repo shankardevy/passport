@@ -11,14 +11,16 @@ defmodule <%= module %> do
   end
 
   def changeset(model, params \\ :empty) do model
-    |> cast(params, ~w(email), [])
+    |> cast(params)
+    |> validate_required(~w(email))
     |> validate_length(:email, min: 1, max: 150)
     |> unique_constraint(:email)
   end
 
   def registration_changeset(model, params) do model
     |> changeset(params)
-    |> cast(params, ~w(password), [])
+    |> cast(params)
+    |> validate_required(~w(password))
     |> validate_length(:password, min: 6, max: 100)
     |> put_hashed_password()
   end
