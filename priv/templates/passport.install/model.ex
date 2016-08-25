@@ -10,15 +10,19 @@ defmodule <%= module %> do
     timestamps()
   end
 
-  def changeset(model, params \\ :empty) do model
-    |> cast(params, ~w(email), [])
+  def changeset(model, params \\ %{}) do
+    model
+    |> cast(params, [:email])
+    |> validate_required([:email])
     |> validate_length(:email, min: 1, max: 150)
     |> unique_constraint(:email)
   end
 
-  def registration_changeset(model, params) do model
+  def registration_changeset(model, params) do
+    model
     |> changeset(params)
-    |> cast(params, ~w(password), [])
+    |> cast(params, [:password])
+    |> validate_required([:password])
     |> validate_length(:password, min: 6, max: 100)
     |> put_hashed_password()
   end
