@@ -11,7 +11,12 @@ defmodule Passport.Plug do
   def authenticate(conn, _) do
     case conn.assigns[:current_user] do
       nil ->
-         conn |> put_flash(:info, "You must be signed in") |> redirect(to: "/login") |> halt
+        conn
+        |> put_flash(:info, "You must be signed in")
+        |> redirect(to: "/login")
+        |> put_session("redirect_to", conn.request_path)
+        |> configure_session(renew: true)
+        |> halt
       _ ->
          conn
     end
