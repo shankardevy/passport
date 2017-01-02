@@ -16,7 +16,6 @@ defmodule Passport.Model do
   end
 
   def find_user_by_id(id) do
-    user_model |> repo.get id
+    user_model |> repo.get(id)
   end
-
 end
