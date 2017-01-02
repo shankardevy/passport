@@ -4,7 +4,7 @@ defmodule Passport.Mixfile do
   def project do
     [app: :passport,
      description: "Provides authentication for phoenix applications",
-     version: "0.5.2",
+     version: "0.5.3",
      elixir: "~> 1.3.4",
      package: package,
      deps: deps,
