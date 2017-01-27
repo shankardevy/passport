@@ -9,7 +9,7 @@ defmodule Passport.Plug do
   end
 
   def authenticate(conn, _) do
-    authenticate_env(Mix.env, conn)
+    authenticate_env(_, conn)
   end
 
   defp authenticate_env(:test, conn) do
