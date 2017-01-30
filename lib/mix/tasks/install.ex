@@ -91,6 +91,10 @@ defmodule Mix.Tasks.Passport.Install do
             <% end %>
           </ul>
 
+    Finally, update your repository:
+
+        $ mix ecto.migrate
+
     """
 
     Mix.shell.info instructions
