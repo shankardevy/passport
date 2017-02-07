@@ -1,9 +1,7 @@
 defmodule <%= base %>.SessionController do
   use <%= base %>.Web, :controller
 
-  alias <%= module %>
   alias Passport.Session
-
 
   def new(conn, _) do
     conn
