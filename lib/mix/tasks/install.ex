@@ -91,13 +91,17 @@ defmodule Mix.Tasks.Passport.Install do
             <% end %>
           </ul>
 
+    Finally, update your repository:
+
+        $ mix ecto.migrate
+
     """
 
     Mix.shell.info instructions
 
   end
 
-  defp validate_args!([singular, plural] = args) do
+  defp validate_args!([_singular, plural] = args) do
     cond do
       plural != Phoenix.Naming.underscore(plural) ->
         Mix.raise "expected the second argument, #{inspect plural}, to be all lowercase using snake_case convention"
@@ -111,7 +115,7 @@ defmodule Mix.Tasks.Passport.Install do
   end
 
   defp validate_args!(_) do
-    raise_with_help
+    raise_with_help()
   end
 
   defp raise_with_help do

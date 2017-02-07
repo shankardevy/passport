@@ -12,7 +12,7 @@ defmodule <%= base %>.RegistrationController do
   def create(conn, %{<%= inspect singular %> => registration_params}) do
     changeset = <%= scoped %>.registration_changeset(%<%= scoped %>{}, registration_params)
     case Repo.insert(changeset) do
-      {:ok, user} ->
+      {:ok, _user} ->
         conn
         |> put_flash(:info, "Account created!")
         |> redirect(to: page_path(conn, :index))

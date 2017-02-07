@@ -8,6 +8,7 @@ defmodule <%= base %>.PasswordController do
     |> render(:new)
   end
 
+  # to be implemented?
   def reset_password(conn, %{"user" => %{"email" => email}}) do
     conn
     |> put_flash(:info, "Password reset link has been sent to your email address.")

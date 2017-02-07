@@ -17,8 +17,10 @@ Passport is WIP. Bug reports and wish list from users are most welcome!
 
   3. `$ mix passport.install`
 
-  4. Follow the instruction shown on the screen to complete the installation
-  
+  4. `$ mix ecto.migrate`
+
+  5. Follow the instruction shown on the screen to complete the installation
+
 ```
     Use Passport in your web/router.ex
         use Passport
@@ -28,7 +30,7 @@ Passport is WIP. Bug reports and wish list from users are most welcome!
           ...
           plug :current_user
         end
-        
+
     Add the following routes to your browser scope in web/router.ex:
 
         get "/login", SessionController, :new
@@ -69,4 +71,4 @@ Passport is WIP. Bug reports and wish list from users are most welcome!
 
   Go to `http://localhost:4000` for a demo.
 
-  
+
