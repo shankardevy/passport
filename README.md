@@ -41,6 +41,12 @@ Passport is WIP. Bug reports and wish list from users are most welcome!
         get "/forget-password", PasswordController, :forget_password
         post "/reset-password", PasswordController, :reset_password
 
+        scope "/" do
+          pipe_through :authenticate
+
+          # routes that require login go here
+        end
+
     Add Passport configuration in your config.exs like below:
         config :passport,
           resource: "#{binding[:module]}",
@@ -70,5 +76,3 @@ Passport is WIP. Bug reports and wish list from users are most welcome!
   4. `$ mix phoenix.server`
 
   Go to `http://localhost:4000` for a demo.
-
-

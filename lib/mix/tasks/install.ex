@@ -74,6 +74,12 @@ defmodule Mix.Tasks.Passport.Install do
         get "/passwords/new", PasswordController, :new
         post "/passwords", PasswordController, :reset
 
+        scope "/" do
+          pipe_through :authenticate
+
+          # routes that require login go here
+        end
+
     Add Passport configuration in your config.exs like below:
         config :passport,
           resource: #{binding[:module]},
