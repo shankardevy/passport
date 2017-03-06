@@ -3,28 +3,34 @@ defmodule Passport.Mixfile do
 
   def project do
     [app: :passport,
-     description: "Provides authentication for phoenix applications",
-     version: "0.0.4",
-     elixir: "~> 1.2",
+     version: "0.1.0",
+     elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     package: package(),
      deps: deps()]
   end
 
+  # Configuration for the OTP application
+  #
+  # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :comeonin]]
+    # Specify extra applications you'll use from Erlang/Elixir
+    [extra_applications: [:logger]]
   end
 
-  defp package do
-    [maintainers: ["Shankar Dhanasekaran - (shankardevy)"],
-     licenses: ["MIT"],
-     links: %{github: "https://github.com/opendrops/passport"}]
-  end
-
+  # Dependencies can be Hex packages:
+  #
+  #   {:my_dep, "~> 0.3.0"}
+  #
+  # Or git/path repositories:
+  #
+  #   {:my_dep, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+  #
+  # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:phoenix, "~> 1.1"},
-      {:comeonin, "~> 2.5"}]
+      {:phoenix, "~> 1.3.0-rc"},
+      {:comeonin, "~> 3.0"}
+    ]
   end
 end

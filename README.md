@@ -1,11 +1,12 @@
 # Passport
-Passport is a ready to use authentication library for Phoenix. Using Passport is as easy as just running this simple command `$ mix passport.install`
+## (Now Phoenix 1.3 Ready)
+Passport is an easy to use Authentication library for Phoenix 1.3.
 
-Passport is designed to have minimal code hidden behind the library and expose all the controllers, templates and views in your project with some default values.
+Passport is rewritten to make use of the context design pattern of Phoenix 1.3.
 
-Passport is WIP. Bug reports and wish list from users are most welcome!
+Passport organises the code in your project in the directory `lib/your_app/auth`
 
-## Installation
+## Installation and Usage
 
   1. Add passport to your list of dependencies in `mix.exs`:
 
@@ -15,64 +16,24 @@ Passport is WIP. Bug reports and wish list from users are most welcome!
 
   2. `$ mix do deps.get, compile`
 
-  3. `$ mix passport.install`
+  3. `$ mix passport.setup`
 
-  4. `$ mix ecto.migrate`
+  4. Follow the instruction displayed on screen.
 
-  5. Follow the instruction shown on the screen to complete the installation
 
-```
-    Use Passport in your web/router.ex
-        use Passport
+## State of development
 
-    add the plug `:current_user` in your browser pipeline
-        pipeline :browser do
-          ...
-          plug :current_user
-        end
+This project is currently under development. Though it works, there are a lot of scope for improvement and not thoroughly tested. My goal is to make Passport a solid library for authentication. See the issues queues for the list of tasks to be done.
 
-    Add the following routes to your browser scope in web/router.ex:
 
-        get "/login", SessionController, :new
-        post "/login", SessionController, :create
-        get "/logout", SessionController, :delete
-        get "/register", RegistrationController, :new
-        post "/register", RegistrationController, :create
-        get "/forget-password", PasswordController, :forget_password
-        post "/reset-password", PasswordController, :reset_password
+## License
 
-        scope "/" do
-          pipe_through :authenticate
+Passport is Copyright © 2017 Opendrops. It is free software, and may be
+redistributed under the terms specified in the MIT-LICENSE file.
 
-          # routes that require login go here
-        end
+## About Opendrops
 
-    Add Passport configuration in your config.exs like below:
-        config :passport,
-          resource: "#{binding[:module]}",
-          repo: "#{binding[:base]}.Repo"
 
-    Optionally, in your navigation you may to include this:
+![Opendrops](http://www.opendrops.com/img/logo.png)
 
-          <ul>
-            <%= if @current_user do %>
-              <li><%= @current_user.email %></li>
-              <li><%= link "Log out", to: session_path(@conn, :delete) %></li>
-            <% else %>
-              <li><%= link "Login", to: session_path(@conn, :new) %></li>
-              <li><%= link "Register", to: registration_path(@conn, :new) %></li>
-            <% end %>
-          </ul>
-```
-
-## Example
-
-  1. `$ git clone git@github.com:opendrops/passport.git`
-
-  2. `$ cd passport/example_app`
-
-  3. `$ mix do deps.get, compile`
-
-  4. `$ mix phoenix.server`
-
-  Go to `http://localhost:4000` for a demo.
+Passport is maintained and funded by Opendrops. We love open source software! If you have a project in Elixir or Ruby, get in touch with us.
