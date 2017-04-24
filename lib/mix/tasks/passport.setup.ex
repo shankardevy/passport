@@ -1,7 +1,6 @@
 defmodule Mix.Tasks.Passport.Setup do
   use Mix.Task
 
-  alias Mix.Phoenix.Context
   @shortdoc "Generates controller, model and views for authentication resource"
 
   @moduledoc """
@@ -13,8 +12,8 @@ defmodule Mix.Tasks.Passport.Setup do
     with :ok <- generate_account(paths),
          :ok <- generate_auth(paths),
          :ok <- generate_web(paths),
-         :ok <- generate_config do
-           print_shell_instructions
+         :ok <- generate_config() do
+           print_shell_instructions()
          end
   end
 
@@ -81,27 +80,6 @@ defmodule Mix.Tasks.Passport.Setup do
     Mix.shell.info [:green, "* updating config/config.exs"]
     IO.write(file, passport_config)
     :ok = File.close(file)
-  end
-
-  defp copy_new_files(_context, paths, binding) do
-    web_prefix = Mix.Phoenix.web_prefix()
-    [context: context, user_schema: user_schema, password_schema: password_schema] = binding
-
-    Mix.Phoenix.copy_from paths, "priv/templates/passport.install", "", binding, [
-      {:eex, "session_controller.ex", Path.join(web_prefix, "controllers/session_controller.ex")},
-      {:eex, "registration_controller.ex", Path.join(web_prefix, "controllers/registration_controller.ex")},
-      {:eex, "login.html.eex", Path.join(web_prefix, "templates/session/new.html.eex")},
-      {:eex, "register.html.eex", Path.join(web_prefix, "templates/registration/new.html.eex")},
-      {:eex, "session_view.ex", Path.join(web_prefix, "views/session_view.ex")},
-      {:eex, "registration_view.ex", Path.join(web_prefix, "views/registration_view.ex")},
-      {:eex, "user_schema.ex", user_schema.file},
-      {:eex, "password_schema.ex", password_schema.file},
-      {:eex, "registration_password_schema.ex", Path.join(context.dir, "registration_password.ex")},
-      {:eex, "user_migration.exs", "priv/repo/migrations/#{timestamp()}_create_passport_user_table.exs"},
-      {:eex, "password_migration.exs", "priv/repo/migrations/#{timestamp()}_create_passport_password_table.exs"},
-      {:eex, "context.ex", context.file},
-    ]
-    context
   end
 
   defp print_shell_instructions() do
