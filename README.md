@@ -1,5 +1,6 @@
 # Passport
-## (Now Phoenix 1.3 Ready)
+## Experimental. 
+
 Passport is an easy to use Authentication library for Phoenix 1.3.
 
 Passport is rewritten to make use of the context design pattern of Phoenix 1.3.
